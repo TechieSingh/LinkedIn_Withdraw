@@ -1,6 +1,6 @@
 # Auto Withdraw Connections Chrome Extension
 
-![Logo](logo.png)
+![Logo](logos.png)
 
 ## Overview
 
