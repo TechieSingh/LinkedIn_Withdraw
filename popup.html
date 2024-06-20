@@ -4,20 +4,58 @@
   <title>Auto Withdraw Connections</title>
   <style>
     body {
-      width: 200px;
+      width: 250px;
       font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      color: #333;
+      text-align: center;
+      padding: 20px;
     }
     button {
       width: 100%;
       padding: 10px;
       margin-top: 10px;
       font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .counter {
+      margin-top: 10px;
+      font-size: 18px;
+      color: #4CAF50;
+    }
+    .developer-info {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #777;
+    }
+    .github-link {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #0073e6;
+    }
+    .logo {
+      width: 145px;
+      height: 79px;
     }
   </style>
 </head>
 <body>
-  <h3>Withdraw Connections</h3>
+  <img src="logo.png" class="logo" alt="Logo">
+  <h3>Withdraw LinkedIn Connections</h3>
   <button id="withdrawButton">Withdraw All</button>
+  <div class="counter" id="counter">Successful withdrawals: 0</div>
+  <div class="developer-info">
+    Developed by <a href="https://www.linkedin.com/in/techiesingh/" target="_blank">Aditya Singh</a><br>
+  </div>
+  <div class="github-link">
+    Give it a star! :<a href="https://github.com/TechieSingh/LinkedIn_Withdraw" target="_blank">GitHub Repository</a>
+  </div>
   <script src="popup.js"></script>
 </body>
 </html>
