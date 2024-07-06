@@ -33,11 +33,11 @@ function withdrawAllConnections(days) {
       const sentStatus = card.querySelector('.time-badge')?.innerText.trim();
       const withdrawButton = card.querySelector('.invitation-card__action-btn');
 
-      if (sentStatus && sentStatus.includes(dateStr) && withdrawButton && !withdrawButton.disabled) {
+
+      if (sentStatus && sentStatus.includes('Sent today') && withdrawButton && !withdrawButton.disabled) {
         withdrawButton.click();
         initialWithdrawn = true;
-        console.log(`Clicked withdraw button for invitation ${dateStr}.`);
-
+        console.log('Clicked withdraw button for invitation sent today.');
         setTimeout(() => {
           const confirmButtons = document.querySelectorAll('button');
           confirmButtons.forEach(confirmButton => {
@@ -65,7 +65,7 @@ function withdrawAllConnections(days) {
     });
 
     if (!initialWithdrawn) {
-      console.log(`No more Withdraw buttons found for invitations ${dateStr}.`);
+      console.log('No more Withdraw buttons found for "Sent today".');
       return;
     }
   }
@@ -77,8 +77,8 @@ function withdrawAllConnections(days) {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'startWithdraw') {
     console.log('Received startWithdraw message');
-    withdrawAllConnections(message.days);
-    sendResponse({ status: 'started' });
+    withdrawAllConnections();
+    sendResponse({status: 'started'});
   }
   return true; // Keeps the message channel open for sendResponse
 });
