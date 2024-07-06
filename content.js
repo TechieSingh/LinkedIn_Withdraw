@@ -1,6 +1,30 @@
+console.log('Content script loaded');
+
 let count = 0;
 
-function withdrawAllConnections() {
+function withdrawAllConnections(days) {
+  const dateStr = convertDaysToDateStr(days);
+
+  function convertDaysToDateStr(days) {
+    if (days === 0) {
+      return 'Sent today';
+    } else if (days === 1) {
+      return 'Sent yesterday';
+    } else if (days < 7) {
+      return `Sent ${days} days ago`;
+    } else if (days >= 7) {
+      return 'Sent 1 week ago';
+    } else if (days < 30) {
+      return `Sent ${days} days ago`;
+    } else if (days < 365) {
+      const months = Math.floor(days / 30);
+      return `Sent ${months} ${months > 1 ? 'months' : 'month'} ago`;
+    } else {
+      const years = Math.floor(days / 365);
+      return `Sent ${years} ${years > 1 ? 'years' : 'year'} ago`;
+    }
+  }
+
   function clickWithdrawButtons() {
     const invitationCards = document.querySelectorAll('.invitation-card');
     let initialWithdrawn = false;
@@ -9,11 +33,11 @@ function withdrawAllConnections() {
       const sentStatus = card.querySelector('.time-badge')?.innerText.trim();
       const withdrawButton = card.querySelector('.invitation-card__action-btn');
 
+
       if (sentStatus && sentStatus.includes('Sent today') && withdrawButton && !withdrawButton.disabled) {
         withdrawButton.click();
         initialWithdrawn = true;
         console.log('Clicked withdraw button for invitation sent today.');
-
         setTimeout(() => {
           const confirmButtons = document.querySelectorAll('button');
           confirmButtons.forEach(confirmButton => {
