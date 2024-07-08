@@ -1,6 +1,7 @@
 console.log('Content script loaded');
 
 let count = 0;
+let stopRequested = false;
 
 function withdrawAllConnections(days) {
   const dateStr = convertDaysToDateStr(days);
@@ -12,10 +13,11 @@ function withdrawAllConnections(days) {
       return 'Sent yesterday';
     } else if (days < 7) {
       return `Sent ${days} days ago`;
-    } else if (days >= 7) {
+    } else if (days === 7) {
       return 'Sent 1 week ago';
     } else if (days < 30) {
-      return `Sent ${days} days ago`;
+      const weeks = Math.floor(days / 7);
+      return `Sent ${weeks} ${weeks > 1 ? 'weeks' : 'week'} ago`;
     } else if (days < 365) {
       const months = Math.floor(days / 30);
       return `Sent ${months} ${months > 1 ? 'months' : 'month'} ago`;
@@ -26,6 +28,12 @@ function withdrawAllConnections(days) {
   }
 
   function clickWithdrawButtons() {
+    if (stopRequested) {
+      console.log('Withdrawal process stopped.');
+      stopRequested = false; // Reset stop request
+      return;
+    }
+
     const invitationCards = document.querySelectorAll('.invitation-card');
     let initialWithdrawn = false;
 
@@ -33,11 +41,11 @@ function withdrawAllConnections(days) {
       const sentStatus = card.querySelector('.time-badge')?.innerText.trim();
       const withdrawButton = card.querySelector('.invitation-card__action-btn');
 
-
-      if (sentStatus && sentStatus.includes('Sent today') && withdrawButton && !withdrawButton.disabled) {
+      if (sentStatus && sentStatus === dateStr && withdrawButton && !withdrawButton.disabled) {
         withdrawButton.click();
         initialWithdrawn = true;
-        console.log('Clicked withdraw button for invitation sent today.');
+        console.log(`Clicked withdraw button for invitation ${dateStr}.`);
+
         setTimeout(() => {
           const confirmButtons = document.querySelectorAll('button');
           confirmButtons.forEach(confirmButton => {
@@ -65,7 +73,7 @@ function withdrawAllConnections(days) {
     });
 
     if (!initialWithdrawn) {
-      console.log('No more Withdraw buttons found for "Sent today".');
+      console.log(`No more Withdraw buttons found for invitations ${dateStr}.`);
       return;
     }
   }
@@ -77,8 +85,12 @@ function withdrawAllConnections(days) {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'startWithdraw') {
     console.log('Received startWithdraw message');
-    withdrawAllConnections();
-    sendResponse({status: 'started'});
+    withdrawAllConnections(message.days);
+    sendResponse({ status: 'started' });
+  } else if (message.action === 'stopWithdraw') {
+    console.log('Received stopWithdraw message');
+    stopRequested = true;
+    sendResponse({ status: 'stopped' });
   }
   return true; // Keeps the message channel open for sendResponse
 });

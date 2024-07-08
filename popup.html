@@ -2,46 +2,76 @@
 <html>
 <head>
   <title>Auto Withdraw Connections</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
   <style>
     body {
       width: 250px;
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f9f9f9;
       color: #333;
       text-align: center;
-      padding: 20px;
+      padding: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
     }
     button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      font-size: 16px;
-      background-color: #4CAF50;
+      flex: 1;
+      padding: 8px;
+      font-size: 14px;
       color: white;
       border: none;
+      border-radius: 4px;
       cursor: pointer;
+      transition: background-color 0.3s;
     }
-    button:hover {
+    #withdrawButton {
+      background-color: #4CAF50;
+      margin-right: 5px;
+    }
+    #withdrawButton:hover {
       background-color: #45a049;
+    }
+    #stopButton {
+      background-color: #f44336;
+      margin-left: 5px;
+    }
+    #stopButton:hover {
+      background-color: #d32f2f;
     }
     .counter {
       margin-top: 10px;
-      font-size: 18px;
+      font-size: 16px;
       color: #4CAF50;
     }
-    .developer-info {
-      margin-top: 20px;
-      font-size: 12px;
+    .developer-info, .github-link {
+      margin-top: 15px;
+      font-size: 11px;
       color: #777;
     }
-    .github-link {
-      margin-top: 10px;
-      font-size: 12px;
+    .github-link a {
       color: #0073e6;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .github-link a:hover {
+      color: #005bb5;
     }
     .logo {
-      width: 145px;
-      height: 79px;
+      width: 80px;
+      margin-bottom: 15px;
     }
   </style>
 </head>
@@ -50,13 +80,16 @@
   <h3>Withdraw LinkedIn Connections</h3>
   <input type="number" id="daysInput" placeholder="Enter number of days">
   <div id="enteredValue" class="counter"></div>
-  <button id="withdrawButton">Withdraw All</button>
+  <div class="button-container">
+    <button id="withdrawButton">Withdraw All</button>
+    <button id="stopButton">Stop</button>
+  </div>
   <div class="counter" id="counter">Successful withdrawals: 0</div>
   <div class="developer-info">
     Developed by <a href="https://www.linkedin.com/in/techiesingh/" target="_blank">Aditya Singh</a><br>
   </div>
   <div class="github-link">
-    Give it a star! :<a href="https://github.com/TechieSingh/LinkedIn_Withdraw" target="_blank">GitHub Repository</a>
+    Give it a star! : <a href="https://github.com/TechieSingh/LinkedIn_Withdraw" target="_blank">GitHub Repository</a>
   </div>
   <script src="popup.js"></script>
 </body>

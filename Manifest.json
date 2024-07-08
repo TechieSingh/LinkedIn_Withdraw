@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Auto Withdraw Connections",
   "version": "1.0",
-  "description": "Automatically withdraw all connection requests.",
+  "description": "Automatically withdraw all pending connection requests.",
   "permissions": [
     "activeTab",
     "scripting"
@@ -20,7 +20,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.linkedin.com/*"],
+      "matches": ["*://*.linkedin.com/*"],
       "js": ["content.js"]
     }
   ],
